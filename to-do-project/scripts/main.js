@@ -12,5 +12,5 @@ import Tasks from './tasks.js';
 
 // submit and form 
     // listener on button 
-    // document.querySelector('#submitButton').addEventListener("onclick", myTasks.addTask());
+   // document.querySelector('#submitButton').addEventListener('click', myTasks.addTask());
     // save new task function 
