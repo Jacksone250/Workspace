@@ -3,8 +3,7 @@
 let d = new Date();
 
 // Task list 
-let taskList = [
-    {
+let taskList = [{
         id: d.getTime(),
         title: 'Trash',
         completed: false
@@ -16,7 +15,7 @@ let taskList = [
     },
     {
         id: d.getTime(),
-        title: 'Valentine', 
+        title: 'Valentine',
         completed: false
     }
 ];
@@ -25,54 +24,66 @@ let taskList = [
 // Task Object default exported 
 export default class Tasks {
 
-// Add task 
+    // Add task 
     addTask() {
         const t = new Date();
         const newId = t.getTime();
         const newTitle = document.querySelector('#newTitle').value;
         const newCompleted = false;
-        
-        console.log(newId);
-        console.log(newTitle);
-        console.log(newCompleted);
 
-        taskList.push({id: newId, title: newTitle, completed: newCompleted});
-
-        // I need to reload the tasklist currently I need to refresh the page to display the new task
-        console.log(taskList.length)
-        console.log(taskList[taskList.length - 1]);
-        document.getElementById('to-do-list').appendChild(renderTask(taskList[taskList.length - 1]));
+        if (newTitle !== "") {
+            taskList.push({
+                id: newId,
+                title: newTitle,
+                completed: newCompleted
+            });
+            document.getElementById('to-do-list').appendChild(renderTask(taskList[taskList.length - 1]));
+        } else {
+            alert("Title Empty");
+        }
     }
 
-// Remove task 
-    removeTask(title){
-        let task = this.getAllTasks().indexOf(title); 
+    // Remove task 
+    removeTask() {
+        // const title = string;
+        let task = this.getAllTasks().indexOf(title);
         taskList.slice(task - 1, task + 1);
     }
 
-// Update Task 
+    // Update Task 
     updateTask() {
 
     }
 
-// Complete Task 
+    // Complete Task 
     completeTask() {
 
     }
 
-// Display Task 
+    // Display Task 
     displayTask() {
 
     }
 
-// Display all current Tasks 
+    // Display all current Tasks 
     displayAllTasks() {
-        taskList.forEach( task => {
+        // removes currentlist to replace with new list
+        const currentList = document.getElementById('to-do-List');
+        // console.log(currentList.children.length);
+        if (currentList !== null && currentList.children.length > 0) {
+            currentList.forEach(task => {
+                console.log(task);
+                document.getElementById('to-do-List').removeChild(task);
+            })
+        };
+
+        // document.getElementById('to-do-List').removeChild(task)
+        taskList.forEach(task => {
             document.getElementById('to-do-list').appendChild(renderTask(task));
         });
     }
 
-// Getters and Setters 
+    // Getters and Setters 
     // Returns all tasks
     getAllTasks() {
         return taskList;
@@ -101,6 +112,6 @@ export default class Tasks {
 function renderTask(task) {
     const item = document.createElement('li');
     item.innerHTML = `<h3>${task.title}</h3>
-    <button>X</button>`;
+    <button id="delete">X</button>`;
     return item;
 }
