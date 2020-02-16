@@ -100,7 +100,7 @@ export default class Tasks {
 
 function renderTask(task) {
     const item = document.createElement('li');
-    item.innerHTML = `<h2>${task.title}</h2>
+    item.innerHTML = `<h3>${task.title}</h3>
     <button>X</button>`;
     return item;
 }
