@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: grey;
+        }
+    </style>
+    <script>
+        const colors = ["red", "green", "blue", "yellow"]
+        const adjectves = ["bold", "shy", "brave", "cowardly", "hardworking", "lazy"]
+        const nouns = [ "car", "house", "building", "road"]
+
+        
+        const numbers = [ -55, -1, -2, 3, 4, 5, 6, 100]
+/*
+        for(let i = 0;  i < colors.length; i++) {
+            //console.dir(colors);
+            //console.log(colors);
+            console.log(colors[i]); 
+        }
+        console.log("   ");
+        colors.forEach(function(item){
+            console.log(item);
+        });
+*/
+        const newArray = colors.map(color => {
+            return 'light ' + color;
+        });
+        /* same as above */
+        /*const newArray = colors.map(color =>'light ' + color);*/
+
+        console.log(newArray);
+
+        let negative = numbers.map(number => number * -1);
+        console.log(negative);
+
+        negative = numbers.map(number => {
+            if(number < 50) {
+                return number * -1;
+            }
+            else return number;
+        });
+        console.log(negative);
+
+        function random6() {
+            return Math.floor(Math.random() * 6) + 1;
+        };
+
+        function random(num) {
+            return Math.floor(Math.random() * num) + 1;
+        };
+
+
+        // function to pick words 
+
+        // function to construct sentence 
+
+
+    </script>
+</head>
+<body>
+    <h1>Check Console Log</h1>
+</body>
+</html>
