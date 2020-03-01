@@ -5,27 +5,62 @@
     <meta charset='utf-8' />
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <title>Star Wars Display</title>
-    <style></style>
-    <link rel='stylesheet' type='text/css' href=''>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            color: yellow;
+            background-color: #343434;
+            font-weight: bolder;
+        }
+        main div {
+            margin: auto 0;
+            text-align: center;
+            
+        }
+        li {
+            list-style: none;
+        }
+
+        ul, ol {
+            padding: 0;
+        }
+
+        .navButtons {
+            width: 40%;
+            height: 3em;
+        }
+
+        .pageButton {
+            width: 100%;
+            height: 3em;
+
+        }
+
+        #skipToList {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+    </style>
 </head>
 
 <body>
+    <main>
+        <div>
+            <h1>Star Wars People</h1>
+            <ol id="listOfPeople">
+            </ol>
+        </div>
 
-    <div>
-        <h1>Star Wars People</h1>
-        <ol id="listOfPeople">
-        </ol>
-    </div>
-
-    <div>
-        <button id="prev">Prevoius</button>
-        <button id="next">Next</button>
-    </div>
-    <ul id="skipToList">
-    </ul>
-
+        <div>
+            <button class="navButtons" id="prev">Prevoius</button>
+            <button class="navButtons" id="next">Next</button>
+        </div>
+        <ul id="skipToList">
+        </ul>
+    </main>
     <script>
-         // Core goals JS
+        // Core goals JS
 
         function getPeople(url) {
             return fetch(url).then((response) => {
@@ -66,9 +101,11 @@
 
         function skipTo(count) {
             const skipToList = document.getElementById('skipToList');
-            for (let i = 1; i <= Math.ceil(count / 10); i++){
-                skipToList.innerHTML += `<li><button id="page${i}">${i}</button></li>`
-                document.getElementById('page'+i).addEventListener("click", function(){loadPage(baseURL+i)});
+            for (let i = 1; i <= Math.ceil(count / 10); i++) {
+                skipToList.innerHTML += `<li><button class="pageButton" id="page${i}">${i}</button></li>`
+                document.getElementById('page' + i).addEventListener("click", function () {
+                    loadPage(baseURL + i)
+                });
             };
 
         }
@@ -82,11 +119,15 @@
             next = data.next;
             prev = data.previous;
             skipTo(data.count);
-            document.getElementById('prev').addEventListener("click", function(){loadPage(prev)});
-            document.getElementById('next').addEventListener("click", function(){loadPage(next)});
+            document.getElementById('prev').addEventListener("click", function () {
+                loadPage(prev)
+            });
+            document.getElementById('next').addEventListener("click", function () {
+                loadPage(next)
+            });
         });
 
-        
+
 
         // const listOfPeople = document.getElementById('listOfPeople'); 
 
