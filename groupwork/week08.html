@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='utf-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Star Wars Display</title>
+    <style></style>
+    <link rel='stylesheet' type='text/css' href=''>
+</head>
+
+<body>
+
+    <div>
+        <h1>Star Wars People</h1>
+        <ol id="listOfPeople">
+        </ol>
+    </div>
+
+    <div>
+        <button id="prev">Prevoius</button>
+        <button id="next">Next</button>
+    </div>
+    <ul id="skipToList">
+    </ul>
+
+    <script>
+         // Core goals JS
+
+        function getPeople(url) {
+            return fetch(url).then((response) => {
+                console.log(response);
+                return response.json();
+            }).catch((err) => {
+                console.log(err);
+            });
+        }
+
+        function buildList(data) {
+            console.log(data);
+            const listOfPeople = document.getElementById('listOfPeople');
+            const people = data.results;
+            for (i in people) {
+                listOfPeople.innerHTML += `<li><h3>${people[i].name}</h3></li>`;
+            };
+        }
+
+        function removeCurrentList() {
+            const listOfPeople = document.getElementById('listOfPeople');
+            const i = 0;
+            while (listOfPeople.children.length > i) {
+                listOfPeople.removeChild(listOfPeople.firstChild);
+            };
+        }
+
+        function loadPage(url) {
+            // remove current list
+            removeCurrentList();
+            // get new list
+            getPeople(url).then((data) => {
+                buildList(data);
+                next = data.next;
+                prev = data.previous;
+            });
+        }
+
+        function skipTo(count) {
+            const skipToList = document.getElementById('skipToList');
+            for (let i = 1; i <= Math.ceil(count / 10); i++){
+                skipToList.innerHTML += `<li><button id="page${i}">${i}</button></li>`
+                document.getElementById('page'+i).addEventListener("click", function(){loadPage(baseURL+i)});
+            };
+
+        }
+
+        let next;
+        let prev;
+        const baseURL = "https://swapi.co/api/people/?page=";
+
+        getPeople("https://swapi.co/api/people/").then((data) => {
+            buildList(data);
+            next = data.next;
+            prev = data.previous;
+            skipTo(data.count);
+            document.getElementById('prev').addEventListener("click", function(){loadPage(prev)});
+            document.getElementById('next').addEventListener("click", function(){loadPage(next)});
+        });
+
+        
+
+        // const listOfPeople = document.getElementById('listOfPeople'); 
+
+        // for (name in people.result) {
+        //     console.log('for loop');
+        //     listOfPeople.innerHTML = `<li><h3>${name}</h3></li>`;
+        // };
+
+
+        // function nextPage(url){
+        //     getPeople(url).then((data) => {
+        //         console.log(data);
+        //         const listOfPeople = document.getElementById('listOfPeople');
+
+        //         const people = data.results;
+        //         console.log(people);
+        //         console.log(people[0].name);
+
+        //         for (i in people) {
+        //             console.log('for loop');
+        //             listOfPeople.innerHTML += `<li><h3>${people[i].name}</h3></li>`;
+        //         };
+
+        //         next = data.next;
+        //         prev = data.previous;
+
+        //         //urls are just a string
+        //         document.getElementById('prev').setAttribute("href", prevPage(prev));
+        //         document.getElementById('next').setAttribute("href", nextPage(next));     
+        //     });
+        // }
+
+        // function prevPage(url){
+        //     getPeople(url).then((data) => {
+        //         console.log(data);
+        //         const listOfPeople = document.getElementById('listOfPeople');
+
+        //         const people = data.results;
+        //         console.log(people);
+        //         console.log(people[0].name);
+
+        //         for (i in people) {
+        //             console.log('for loop');
+        //             listOfPeople.innerHTML += `<li><h3>${people[i].name}</h3></li>`;
+        //         };
+
+        //         next = data.next;
+        //         prev = data.previous;
+
+        //         //urls are just a string
+        //         document.getElementById('prev').setAttribute("href", prevPage(prev));
+        //         document.getElementById('next').setAttribute("href", nextPage(next));      
+        //     });
+        // }
+
+        // let next;
+        // let prev;
+
+        // getPeople("https://swapi.co/api/people/").then((data) => {
+        //     console.log(data);
+        //     const listOfPeople = document.getElementById('listOfPeople');
+
+        //     const people = data.results;
+        //     console.log(people);
+        //     console.log(people[0].name);
+
+        //     for (i in people) {
+        //         console.log('for loop');
+        //         listOfPeople.innerHTML += `<li><h3>${people[i].name}</h3></li>`;
+        //     };
+
+        //     next = data.next;
+        //     prev = data.previous;
+
+        //     //urls are just a string
+        //     document.getElementById('prev').setAttribute("href", prevPage(prev));
+        //     document.getElementById('next').setAttribute("href", nextPage(next));    
+        // });
+    </script>
+</body>
+
+</html>

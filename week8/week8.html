@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon List</title>
+    <style>
+        main {
+            display: flex;
+            width: 100vw;
+            overflow: hidden;
+        }
+        #list, #details {
+            margin: 1em;
+            padding: 1em;
+            border: 1px solid black;
+            width: 100vw; 
+            height: 40em;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+        .showDetails {
+            transform: translateX(-105vw);
+        }
+    </style>
+    <script src="week8.js" defer></script>
+</head>
+<body>
+    <h1>Pokemon List</h1>
+    <main>
+        <ul id="list">
+            <li>Pikachu</li>
+        </ul>
+        <article id="details">Name</article>
+    </main>
+</body>
+</html>
