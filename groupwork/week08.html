@@ -12,16 +12,19 @@
             background-color: #343434;
             font-weight: bolder;
         }
+
         main div {
             margin: auto 0;
             text-align: center;
-            
+
         }
+
         li {
             list-style: none;
         }
 
-        ul, ol {
+        ul,
+        ol {
             padding: 0;
         }
 
@@ -40,7 +43,6 @@
             display: grid;
             grid-template-columns: repeat(4, 1fr);
         }
-
     </style>
 </head>
 
@@ -75,9 +77,9 @@
             console.log(data);
             const listOfPeople = document.getElementById('listOfPeople');
             const people = data.results;
-            for (i in people) {
+            for (const i in people) {
                 listOfPeople.innerHTML += `<li><h3>${people[i].name}</h3></li>`;
-            };
+            }
         }
 
         function removeCurrentList() {
@@ -85,7 +87,7 @@
             const i = 0;
             while (listOfPeople.children.length > i) {
                 listOfPeople.removeChild(listOfPeople.firstChild);
-            };
+            }
         }
 
         function loadPage(url) {
@@ -101,29 +103,31 @@
 
         function skipTo(count) {
             const skipToList = document.getElementById('skipToList');
-            for (let i = 1; i <= Math.ceil(count / 10); i++) {
-                skipToList.innerHTML += `<li><button class="pageButton" id="page${i}">${i}</button></li>`
-                document.getElementById('page' + i).addEventListener("click", function () {
-                    loadPage(baseURL + i)
-                });
-            };
-
+            for (let pageNum = 1; pageNum <= Math.ceil(count / 10); pageNum++) {
+                    skipToList.innerHTML +=
+                        `<li><button class="pageButton" id="page${pageNum}">${pageNum}</button></li>`;
+            }
+            for (let pageNum = 1; pageNum <= Math.ceil(count / 10); pageNum++) {
+                    document.getElementById('page' + pageNum).addEventListener("click", function () {
+                        loadPage("https://swapi.co/api/people/?page=" + pageNum);
+                    });
+            }
         }
 
         let next;
         let prev;
-        const baseURL = "https://swapi.co/api/people/?page=";
 
         getPeople("https://swapi.co/api/people/").then((data) => {
             buildList(data);
             next = data.next;
             prev = data.previous;
+
             skipTo(data.count);
             document.getElementById('prev').addEventListener("click", function () {
-                loadPage(prev)
+                loadPage(prev);
             });
             document.getElementById('next').addEventListener("click", function () {
-                loadPage(next)
+                loadPage(next);
             });
         });
 
